@@ -1,3 +1,105 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+@theme {
+  --font-sans: "Lato", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --color-brand-primary: #243d94;
+  --color-brand-secondary: #0099a8;
+  --color-brand-white: #ffffff;
+  --color-brand-yellow: #ed9719;
+  --color-brand-red: #e00023;
+  --color-brand-violet: #48234c;
+  --color-brand-green: #668b2f;
+  --color-brand-warm-gray: #635b51;
+  --color-brand-black: #1a1818;
+
+  --color-indigo-50: #eff2fa;
+  --color-indigo-100: #dce2f3;
+  --color-indigo-200: #bac5e7;
+  --color-indigo-500: #3453b0;
+  --color-indigo-600: var(--color-brand-primary);
+  --color-indigo-700: #1d3278;
+
+  --color-teal-50: #e6f5f6;
+  --color-teal-600: #008793;
+  --color-teal-700: #007984;
+
+  --color-amber-50: #fff4e3;
+  --color-amber-700: #ad6500;
+  --color-red-600: var(--color-brand-red);
+
+  --color-slate-50: var(--color-brand-white);
+  --color-slate-100: #f5f4f3;
+  --color-slate-200: #e6e3df;
+  --color-slate-300: #d3cec8;
+  --color-slate-400: #918a82;
+  --color-slate-500: #756d63;
+  --color-slate-600: var(--color-brand-warm-gray);
+  --color-slate-700: #4f4942;
+  --color-slate-800: #332f2b;
+  --color-slate-900: var(--color-brand-black);
+  --color-slate-950: var(--color-brand-black);
+}
+
+:root {
+  color-scheme: light;
+  font-family: "Lato", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: #ffffff;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button:not(.hero-card) {
+  border-radius: 9999px;
+}
+
+a {
+  color: inherit;
+}
+
+::view-transition-old(root) {
+  animation: 150ms ease-in both page-exit;
+}
+
+::view-transition-new(root) {
+  animation: 220ms ease-out both page-enter;
+}
+
+@keyframes page-exit {
+  to {
+    opacity: 0;
+    transform: translateY(-0.25rem);
+  }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.01ms;
+  }
+}

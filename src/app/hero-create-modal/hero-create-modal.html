@@ -1,0 +1,75 @@
+<div *ngIf="open" class="fixed inset-0 z-50 grid place-items-center bg-slate-950/60 p-4"
+     role="presentation" (click)="close()" (keydown.escape)="close()">
+  <section role="dialog" aria-modal="true" aria-labelledby="create-hero-title"
+           (click)="$event.stopPropagation()"
+           class="w-full max-w-xl overflow-hidden rounded-3xl bg-white shadow-2xl">
+    <div class="flex items-start justify-between border-b border-slate-100 px-6 py-5 sm:px-8">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.18em] text-indigo-600">New roster member · Step {{ step === 'details' ? 1 : 2 }} of 2</p>
+        <h2 id="create-hero-title" class="mt-2 text-2xl font-black tracking-tight text-slate-950">
+          {{ step === 'details' ? 'Add a hero' : 'Review your hero' }}
+        </h2>
+      </div>
+      <button type="button" aria-label="Close" (click)="close()"
+              class="grid size-9 place-items-center rounded-full bg-slate-100 text-xl text-slate-600 hover:bg-slate-200">×</button>
+    </div>
+
+    <form *ngIf="step === 'details'" #heroForm="ngForm" (ngSubmit)="submitDetails()" class="space-y-5 px-6 py-6 sm:px-8">
+      <div>
+        <label for="hero-name" class="mb-1.5 block text-sm font-bold text-slate-700">Hero name</label>
+        <input id="hero-name" name="name" [(ngModel)]="model.name" required maxlength="60"
+               class="w-full rounded-full border border-slate-300 px-5 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+               placeholder="e.g. Star Sentinel">
+      </div>
+      <div>
+        <label for="hero-alter-ego" class="mb-1.5 block text-sm font-bold text-slate-700">Alter ego</label>
+        <input id="hero-alter-ego" name="alterEgo" [(ngModel)]="model.alterEgo"
+               class="w-full rounded-full border border-slate-300 px-5 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+               placeholder="Real name (optional)">
+      </div>
+      <div>
+        <label for="hero-power" class="mb-1.5 block text-sm font-bold text-slate-700">Power</label>
+        <input id="hero-power" name="power" [(ngModel)]="model.power" required maxlength="80"
+               class="w-full rounded-full border border-slate-300 px-5 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+               placeholder="e.g. Light manipulation">
+      </div>
+      <div>
+        <label for="hero-message" class="mb-1.5 block text-sm font-bold text-slate-700">Message</label>
+        <textarea id="hero-message" name="message" [(ngModel)]="model.message" rows="3" maxlength="240"
+                  class="w-full resize-y rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+                  placeholder="A short message (optional)"></textarea>
+      </div>
+      <div class="flex justify-end gap-3 border-t border-slate-100 pt-4">
+        <button type="button" (click)="close()" class="rounded-xl px-4 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-100">Cancel</button>
+        <button type="submit" [disabled]="!heroForm.form.valid"
+                class="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-slate-300">Review details</button>
+      </div>
+    </form>
+
+    <div *ngIf="step === 'review'" class="px-6 py-6 sm:px-8">
+      <p class="mb-5 text-sm leading-6 text-slate-600">Check the details below. You can go back to edit them before saving.</p>
+      <dl class="divide-y divide-slate-100 rounded-2xl border border-slate-200">
+        <div class="grid grid-cols-3 gap-3 px-4 py-3">
+          <dt class="text-sm font-semibold text-slate-500">Name</dt>
+          <dd class="col-span-2 text-sm font-bold text-slate-900">{{ model.name }}</dd>
+        </div>
+        <div class="grid grid-cols-3 gap-3 px-4 py-3">
+          <dt class="text-sm font-semibold text-slate-500">Alter ego</dt>
+          <dd class="col-span-2 text-sm text-slate-800">{{ model.alterEgo || 'Not provided' }}</dd>
+        </div>
+        <div class="grid grid-cols-3 gap-3 px-4 py-3">
+          <dt class="text-sm font-semibold text-slate-500">Power</dt>
+          <dd class="col-span-2 text-sm text-slate-800">{{ model.power }}</dd>
+        </div>
+        <div class="grid grid-cols-3 gap-3 px-4 py-3">
+          <dt class="text-sm font-semibold text-slate-500">Message</dt>
+          <dd class="col-span-2 text-sm text-slate-800">{{ model.message || 'Not provided' }}</dd>
+        </div>
+      </dl>
+      <div class="mt-6 flex justify-end gap-3 border-t border-slate-100 pt-4">
+        <button type="button" (click)="editDetails()" class="rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50">Edit</button>
+        <button type="button" (click)="saveHero()" class="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-indigo-700">Save hero</button>
+      </div>
+    </div>
+  </section>
+</div>
