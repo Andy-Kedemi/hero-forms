@@ -3,9 +3,11 @@
   <section role="dialog" aria-modal="true" aria-labelledby="hero-modal-title"
            (click)="$event.stopPropagation()"
            class="w-full max-w-xl overflow-hidden rounded-4xl bg-white shadow-2xl shadow-slate-950/30">
-    <div class="relative overflow-hidden bg-indigo-700 px-6 pb-7 pt-6 text-white sm:px-8 sm:pb-8">
+    <div class="relative overflow-hidden px-6 pb-7 pt-6 text-white sm:px-8 sm:pb-8"
+         [ngClass]="powerTheme(selectedHero.power).header">
       <div aria-hidden="true" class="absolute -right-10 -top-16 size-56 rounded-full border-28 border-white/5"></div>
-      <div aria-hidden="true" class="absolute -bottom-20 right-24 size-40 rounded-full bg-teal-400/10"></div>
+      <div aria-hidden="true" class="absolute -bottom-20 right-24 size-40 rounded-full"
+           [ngClass]="powerTheme(selectedHero.power).accent"></div>
       <div class="relative flex items-center justify-between gap-4">
         <p class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-indigo-100">
           <span class="size-1.5 rounded-full bg-teal-300"></span>
@@ -15,7 +17,8 @@
                 class="grid size-10 shrink-0 place-items-center rounded-full border border-white/15 bg-white/10 text-2xl leading-none text-white transition hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">×</button>
       </div>
       <div class="relative mt-7 flex items-center gap-4 sm:gap-5">
-        <span class="grid size-16 shrink-0 place-items-center rounded-2xl border border-white/15 bg-white/10 text-2xl font-black text-white shadow-inner sm:size-18">
+        <span class="grid size-16 shrink-0 place-items-center rounded-2xl border border-white/15 text-2xl font-black text-white shadow-inner sm:size-18"
+              [ngClass]="powerTheme(selectedHero.power).avatar">
           {{ selectedHero.name.slice(0, 1) }}
         </span>
         <div class="min-w-0">
@@ -26,24 +29,28 @@
     </div>
     <div class="space-y-5 px-6 py-6 sm:px-8 sm:py-7">
       <div class="grid gap-3 sm:grid-cols-2">
-        <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
-          <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">Superpower</p>
-          <p class="mt-2 inline-flex max-w-full rounded-full bg-teal-50 px-3 py-1.5 text-sm font-bold text-teal-700">
+        <div class="rounded-2xl border p-4" [ngClass]="powerTheme(selectedHero.power).card">
+          <p class="text-[11px] font-bold uppercase tracking-[0.14em]" [ngClass]="powerTheme(selectedHero.power).label">Superpower</p>
+          <p class="mt-2 inline-flex max-w-full rounded-full px-3 py-1.5 text-sm font-bold"
+             [ngClass]="powerTheme(selectedHero.power).badge">
             <span class="truncate">{{ selectedHero.power || 'Not specified' }}</span>
           </p>
         </div>
-        <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
-          <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">Known as</p>
+        <div class="rounded-2xl border p-4" [ngClass]="powerTheme(selectedHero.power).card">
+          <p class="text-[11px] font-bold uppercase tracking-[0.14em]" [ngClass]="powerTheme(selectedHero.power).label">Known as</p>
           <p class="mt-2 truncate text-sm font-bold text-slate-800">{{ selectedHero.alterEgo || 'Identity unknown' }}</p>
         </div>
       </div>
-      <div *ngIf="selectedHero.message" class="rounded-2xl border border-indigo-100 bg-indigo-50/70 p-4 sm:p-5">
-        <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-indigo-500">Message</p>
+      <div *ngIf="selectedHero.message" class="rounded-2xl border p-4 sm:p-5"
+           [ngClass]="powerTheme(selectedHero.power).message">
+        <p class="text-[11px] font-bold uppercase tracking-[0.14em]"
+           [ngClass]="powerTheme(selectedHero.power).messageLabel">Message</p>
         <p class="mt-2 whitespace-pre-wrap text-sm leading-6 text-slate-700">{{ selectedHero.message }}</p>
       </div>
       <div class="flex justify-end border-t border-slate-100 pt-5">
         <button type="button" (click)="closed.emit()"
-                class="rounded-full bg-indigo-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-indigo-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Done</button>
+                class="rounded-full px-5 py-2.5 text-sm font-bold text-white transition focus-visible:outline-2 focus-visible:outline-offset-2"
+                [ngClass]="powerTheme(selectedHero.power).button">Done</button>
       </div>
     </div>
   </section>
