@@ -8,6 +8,5 @@ import { MessagesComponent } from './messages/messages';
   standalone: true,
   imports: [RouterLink, RouterLinkActive, RouterOutlet, MessagesComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css',
 })
 export class App {}

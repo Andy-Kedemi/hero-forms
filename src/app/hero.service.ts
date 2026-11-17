@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, map, of, take, throwError } from 'rxjs';
+import { Observable, BehaviorSubject, map, of } from 'rxjs';
 
 import { Hero, NewHero } from '../hero';
 import { HEROES } from '../mock-heroes';
@@ -24,13 +24,6 @@ export class HeroService {
     );
   }
 
-  getHero(id: number): Observable<Hero | undefined> {
-    return this.heroes.pipe(
-      map((heroes) => heroes.find((hero) => hero.id === id)),
-      take(1),
-    );
-  }
-
   addHero(hero: NewHero): Observable<Hero> {
     const newHero: Hero = {
       ...hero,
@@ -39,26 +32,6 @@ export class HeroService {
     };
     this.heroes.next([...this.heroes.value, newHero]);
     return of(newHero);
-  }
-
-  updateHero(hero: Hero): Observable<Hero> {
-    if (!this.heroes.value.some((current) => current.id === hero.id)) {
-      return throwError(() => new Error(`Hero with id ${hero.id} was not found.`));
-    }
-
-    this.heroes.next(
-      this.heroes.value.map((current) => (current.id === hero.id ? { ...hero } : current)),
-    );
-    return of(hero);
-  }
-
-  deleteHero(id: number): Observable<void> {
-    if (!this.heroes.value.some((hero) => hero.id === id)) {
-      return throwError(() => new Error(`Hero with id ${id} was not found.`));
-    }
-
-    this.heroes.next(this.heroes.value.filter((hero) => hero.id !== id));
-    return of(undefined);
   }
 
   searchHeroes(term: string): Observable<Hero[]> {
