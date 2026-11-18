@@ -70,8 +70,10 @@ button:not(.hero-card) {
   border-radius: 9999px;
 }
 
-a {
-  color: inherit;
+@layer base {
+  a {
+    color: inherit;
+  }
 }
 
 ::view-transition-old(root) {

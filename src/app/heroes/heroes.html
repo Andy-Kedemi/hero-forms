@@ -50,22 +50,32 @@
       @if (view() === 'grid') {
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
           @for (hero of visible; track hero.id) {
-            <button type="button" (click)="selectedHero = hero" aria-haspopup="dialog"
-                    class="hero-card group min-w-0 rounded-xl border border-slate-200 bg-white p-3.5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-              <div class="mb-4 flex items-center justify-between">
-                <span class="grid size-9 place-items-center rounded-lg bg-indigo-50 text-base font-black text-indigo-700">{{ hero.name.slice(0, 1) }}</span>
-                <span class="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-600">#{{ hero.id }}</span>
+            <article class="hero-card group min-w-0 rounded-xl border border-slate-200 bg-white p-3.5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-md">
+              <button type="button" (click)="selectedHero = hero" aria-haspopup="dialog"
+                      class="hero-card w-full text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <div class="mb-4 flex items-center justify-between">
+                  <span class="grid size-9 place-items-center rounded-lg bg-indigo-50 text-base font-black text-indigo-700">{{ hero.name.slice(0, 1) }}</span>
+                  <span class="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-600">#{{ hero.id }}</span>
+                </div>
+                <h2 class="truncate text-sm font-bold text-slate-950 group-hover:text-indigo-700">{{ hero.name }}</h2>
+                <p class="mt-0.5 truncate text-xs text-slate-500">{{ hero.alterEgo || 'Alter ego unknown' }}</p>
+                <div class="mt-3 border-t border-slate-100 pt-2.5">
+                  <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-400">Power</p>
+                  <p class="mt-0.5 truncate text-xs font-semibold text-slate-700">{{ hero.power }}</p>
+                </div>
+                @if (hero.message) {
+                  <p class="mt-2.5 line-clamp-2 text-xs leading-4 text-slate-500">{{ hero.message }}</p>
+                }
+              </button>
+              <div class="mt-3 flex justify-end">
+                <button type="button" (click)="selectedHero = hero"
+                        aria-haspopup="dialog"
+                        [attr.aria-label]="'View ' + hero.name + ' details'"
+                        class="rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold text-indigo-700 transition hover:bg-indigo-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  View
+                </button>
               </div>
-              <h2 class="truncate text-sm font-bold text-slate-950 group-hover:text-indigo-700">{{ hero.name }}</h2>
-              <p class="mt-0.5 truncate text-xs text-slate-500">{{ hero.alterEgo || 'Alter ego unknown' }}</p>
-              <div class="mt-3 border-t border-slate-100 pt-2.5">
-                <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-400">Power</p>
-                <p class="mt-0.5 truncate text-xs font-semibold text-slate-700">{{ hero.power }}</p>
-              </div>
-              @if (hero.message) {
-                <p class="mt-2.5 line-clamp-2 text-xs leading-4 text-slate-500">{{ hero.message }}</p>
-              }
-            </button>
+            </article>
           } @empty {
             <div class="col-span-full rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-12 text-center">
               <h2 class="font-bold text-slate-900">No heroes found</h2>
@@ -77,23 +87,30 @@
         <ul class="divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
           @for (hero of visible; track hero.id) {
             <li>
-              <button type="button" (click)="selectedHero = hero" aria-haspopup="dialog"
-                      class="hero-card group flex w-full items-center gap-4 px-4 py-3 text-left transition hover:bg-indigo-50/50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600">
-                <span class="w-10 shrink-0 text-center text-xs font-semibold text-slate-500">#{{ hero.id }}</span>
-                <span class="grid size-9 shrink-0 place-items-center rounded-lg bg-indigo-50 text-base font-black text-indigo-700">{{ hero.name.slice(0, 1) }}</span>
-                <span class="min-w-0 flex-1">
-                  <span class="block truncate text-sm font-bold text-slate-950 group-hover:text-indigo-700">{{ hero.name }}</span>
-                  <span class="block truncate text-xs text-slate-500">{{ hero.alterEgo || 'Alter ego unknown' }}</span>
-                </span>
-                <span class="hidden min-w-0 basis-1/4 sm:block">
-                  <span class="block text-[10px] font-semibold uppercase tracking-wide text-slate-400">Power</span>
-                  <span class="block truncate text-xs font-semibold text-slate-700">{{ hero.power }}</span>
-                </span>
-                @if (hero.message) {
-                  <span class="hidden min-w-0 basis-1/4 truncate text-xs text-slate-500 lg:block">{{ hero.message }}</span>
-                }
-                <span class="shrink-0 text-slate-300 transition group-hover:text-indigo-500" aria-hidden="true">→</span>
-              </button>
+              <div class="hero-card group flex w-full items-center gap-4 px-4 py-3 transition hover:bg-indigo-50/50">
+                <button type="button" (click)="selectedHero = hero" aria-haspopup="dialog"
+                        class="hero-card flex min-w-0 flex-1 items-center gap-4 text-left focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600">
+                  <span class="w-10 shrink-0 text-center text-xs font-semibold text-slate-500">#{{ hero.id }}</span>
+                  <span class="grid size-9 shrink-0 place-items-center rounded-lg bg-indigo-50 text-base font-black text-indigo-700">{{ hero.name.slice(0, 1) }}</span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-sm font-bold text-slate-950 group-hover:text-indigo-700">{{ hero.name }}</span>
+                    <span class="block truncate text-xs text-slate-500">{{ hero.alterEgo || 'Alter ego unknown' }}</span>
+                  </span>
+                  <span class="hidden min-w-0 basis-1/4 sm:block">
+                    <span class="block text-[10px] font-semibold uppercase tracking-wide text-slate-400">Power</span>
+                    <span class="block truncate text-xs font-semibold text-slate-700">{{ hero.power }}</span>
+                  </span>
+                  @if (hero.message) {
+                    <span class="hidden min-w-0 basis-1/4 truncate text-xs text-slate-500 lg:block">{{ hero.message }}</span>
+                  }
+                </button>
+                <button type="button" (click)="selectedHero = hero"
+                        aria-haspopup="dialog"
+                        [attr.aria-label]="'View ' + hero.name + ' details'"
+                        class="shrink-0 rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold text-indigo-700 transition hover:bg-indigo-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  View
+                </button>
+              </div>
             </li>
           } @empty {
             <li class="px-6 py-12 text-center">
